@@ -1,0 +1,88 @@
+html, body {
+  margin-bottom: 5%;
+}
+
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+.navbar-nav  li a:hover {
+    color: #842029 !important;
+}
+
+/*.footer-padding {
+	padding-bottom: 60px;
+}*/
+
+.footer {
+	position: fixed;
+	text-align: right;
+  padding-right: 2%;
+	bottom: 0;
+	width: 100%;
+	background-color: #842029;
+}
+
+.footer p {
+	margin-top: 25px;
+	font-size: 16px;
+  color: #fff;
+}
+
+.login-form-container {
+  margin: 2% 15% 2%;
+  padding: 3% 10% 3%;
+}
+
+.homepage-text {
+  margin: 2% 15%;
+  padding: 5% 10%;
+}
+
+.user-stats {
+  margin: 1% 5%;
+}
+
+.divider {
+  border-top: 5px solid #999;
+
+}
+
+.items-list-container {
+  margin: 0 20%;
+  padding: 0 20%;
+}
+
+.overview-text {
+  margin: 2% 5%;
+  padding: 2% 5%;
+}
+
+.list-group {
+  display: inline-block;
+}
+
+a:link {
+  color: #842029;
+}
+
+a:visited {
+  color: #141619;
+}
+
+a:hover {
+  color: white;
+}
+
+.row {
+  position: absolute;
+}
