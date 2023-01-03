@@ -1,0 +1,33 @@
+<%- include("partials/header") %>
+
+<div class="user-stats text-left">
+
+  <form class="" action="officer" method="post">
+    <% if (userList != null) { %>
+      <% userList.forEach(function(user){ %>
+        <input type="checkbox" name="checkbox" value="<%= user %>">
+        <label for="checkbox"><%= user %></label>
+        <br>
+      <% }); %>
+      <input type="submit" name="button" value="Submit attendance">
+    <% }; %>
+  </form>
+  <br>
+  <hr class="divider">
+  <br>
+  <br>
+  <h1>UPDATE GUILD LOOT LIST --- ONLY CLICK THIS BUTTON ONCE!!</h1>
+  <form class="" action="updateLoot" method="post">
+    <input type="submit" name="button" value="Update Loot List">
+  </form>
+  <br>
+  <br>
+  <br>
+  <h1>UPDATE ATTENDANCE --- ONLY CLICK THIS BUTTON ONCE!!</h1>
+  <form class="" action="updateAttendance" method="post">
+    <input type="submit" name="button" value="Update Attendance Bonus">
+  </form>
+
+</div>
+
+<%- include("partials/footer") %>

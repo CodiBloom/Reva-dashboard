@@ -2,8 +2,8 @@
 
 <div class="user-stats text-center">
 
-  <% if (username != "") { %>
-    <h1>Welcome back, <%= username %>!</h1>
+  <% if (username != null) { %>
+    <h1>Welcome, <%= username %>!</h1>
     <br />
   <% } %>
 
@@ -11,7 +11,7 @@
   <br />
 
   <h4>Attendance over last 10 weeks: </h4>
-  <h3>90%</h3>
+  <h3><%= attendanceCount %>%</h3>
   <hr>
 
   <% if (items[0] != "empty") { %>

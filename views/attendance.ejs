@@ -2,33 +2,23 @@
 
 <hr class="divider">
 
-<p class="text-center">
-  <a class="btn btn-danger" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">October 23rd</a>
-  <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">October 24th</button>
-</p>
-<div class="row">
-  <div class="col">
-    <div class="collapse multi-collapse" id="multiCollapseExample1">
-      <div class="card card-body">
-        <ul>
-          <li>Baddee</li>
-          <li>Lanmeh</li>
-          <li>Ras</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="collapse multi-collapse" id="multiCollapseExample2">
-      <div class="card card-body">
-        <ul>
-          <li>Shez</li>
-          <li>Cowdruid</li>
-          <li>Garallu (late)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<% if (dateList == "") { %>
+  <h1>No attendance records present in DB.</h1>
+<% } else { %>
+  <% let count = 0 %>
+
+  <% if (dateList!= null && userList != null){ %>
+    <% dateList.forEach(function(date){ %>
+      <h2><%= date %></h2>
+      <ol>
+        <% userList[count].forEach(function(user){ %>
+          <li><%= user %></li>
+        <% }) %>
+      </ol>
+      <% count++ %>
+      <hr class="divider">
+    <% }); %>
+  <% } %>
+<% } %>
 
 <%- include("partials/footer") %>

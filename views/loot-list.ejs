@@ -1,61 +1,38 @@
 <%- include("partials/header") %>
 
-<div class="homepage-text text-center">
-  <h1>This page will provide an overview of the guild-wide loot list.</h1>
-  <h2>That means a full list for every item from the current phase.</h2>
-  <h4>Each item's list will display the order of players in line for that item.</h4>
-  <h6>(search functionality will be included in the final design - it won't be a literal list of every single item unless you want it to be)</h6>
-</div>
-<br />
-<br />
-<h1 class="text-center">EXAMPLE</h1>
 <hr class="divider">
-<h3><a href="https://www.wowhead.com/wotlk/item=44662/life-binders-locket" target="_blank">Life-Binder's Locket</a></h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Player</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Baddee</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Ras</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Shez</td>
-    </tr>
-  </tbody>
-</table>
-<hr class="divider">
-<h3><a href="https://www.wowhead.com/wotlk/item=40375/ring-of-decaying-beauty" target="_blank">Ring of Decaying Beauty</a></h3>
-<table class="table bottom-table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Player</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Baddee</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Ras</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Shez</td>
-    </tr>
-  </tbody>
-</table>
+
+<% if (queryResults == undefined || queryResults == null) { %>
+  <h1>No items present in DB.</h1>
+<% } else { %>
+  <% queryResults.forEach(function(item){ %>
+    <% let count = 1; %>
+    <hr class="divider">
+    <h3> <%= item.itemName %> </h3>
+    <% if (!item.distributionOrder[0]){ %>
+      <h5>No players in distribution order -- item is up for free rolls.</h5>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Player</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% item.distributionOrder.forEach(function(user){ %>
+            <tr>
+              <th scope="row"><%= count %></th>
+              <td><%= user.username %></td>
+              <td><%= user.value %></td>
+            </tr>
+            <% count++ %>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  <% }); %>
+<% } %>
 
 <%- include("partials/footer") %>
