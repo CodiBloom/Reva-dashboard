@@ -63,6 +63,7 @@ app.post("/home", async function(req, res){
   const username = req.body.username;
   const password = req.body.password;
   let attendanceCount = 0;
+  let itemsInFirstPlace = [];
 
   const queryResults = await new Promise((resolve, reject) => {
     Attendance.find(function(err, results){
@@ -78,12 +79,39 @@ app.post("/home", async function(req, res){
             if(userResult == username){
               attendanceCount++;
             }
-          })
+          });
         });
         resolve(results);
       }
     });
   });
+
+  const lootListQueryResults = await new Promise((resolve, reject) => {
+    GuildLoot.find(function(err, results){
+      if (err) reject (err);
+
+      if(!results[0]){
+        console.log("No results");
+        resolve();
+        return;
+      } else {
+        results.forEach(function(result){
+          if(!result.distributionOrder[0]){
+            return;
+          } else {
+            if(result.distributionOrder[0].username == username){
+              itemsInFirstPlace.push(result.itemName);
+            }
+          }
+        });
+        resolve(results);
+      }
+    });
+  });
+
+  if(itemsInFirstPlace == []){
+    itemsInFirstPlace.push("empty");
+  }
 
   if(username && password){
     User.findOne({ username: username, password: password }, function(err, results){
@@ -105,7 +133,7 @@ app.post("/home", async function(req, res){
 
         res.cookie("loggedIn", true, loggedInOptions);
         res.cookie("username", username, usernameOptions);
-        res.render("home", { username: username, items: ["empty"], attendanceCount: attendanceCount });
+        res.render("home", { username: username, items: itemsInFirstPlace, attendanceCount: attendanceCount });
       } else {
         res.render("login", { failedLogin: "Incorrect username/password." });
       }
@@ -194,6 +222,7 @@ app.get("/home", async function(req, res){
   const loggedIn = req.cookies.loggedIn;
   const username = req.cookies.username;
   let attendanceCount = 0;
+  let itemsInFirstPlace = [];
 
   const queryResults = await new Promise((resolve, reject) => {
     Attendance.find(function(err, results){
@@ -218,8 +247,35 @@ app.get("/home", async function(req, res){
 
   attendanceCount = attendanceCount / 20 * 100;
 
+  const lootListQueryResults = await new Promise((resolve, reject) => {
+    GuildLoot.find(function(err, results){
+      if (err) reject (err);
+
+      if(!results[0]){
+        console.log("No results");
+        resolve();
+        return;
+      } else {
+        results.forEach(function(result){
+          if(!result.distributionOrder[0]){
+            return;
+          } else {
+            if(result.distributionOrder[0].username == username){
+              itemsInFirstPlace.push(result.itemName);
+            }
+          }
+        });
+        resolve(results);
+      }
+    });
+  });
+
+  if(itemsInFirstPlace == []){
+    itemsInFirstPlace.push("empty");
+  }
+
   if(loggedIn != undefined && username != undefined){
-    res.render("home", { username: username, items: ["empty"], attendanceCount: attendanceCount });
+    res.render("home", { username: username, items: itemsInFirstPlace, attendanceCount: attendanceCount });
   } else if(loggedIn == undefined && username != undefined){
     res.render("login", { failedLogin: "Session expired, log in again before attempting to access other pages."});
   } else if(loggedIn == undefined && username == undefined){
